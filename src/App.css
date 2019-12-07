@@ -17,11 +17,21 @@
   color: white;
 }
 
+.Search-box {
+  height: 300px;
+  width: 600px;
+  border: 2px solid white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .App-link {
   color: #09d3ac;
 }
 
 .Radio-buttons {
   display: flex;
-  
+
 }
