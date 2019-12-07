@@ -5,9 +5,17 @@ import React from 'react';
 //   Route,
 //   Link
 // } from "react-router-dom";
-import logo from './logo.svg';
 import './App.css';
 import MyComponent from './components/MyComponent.js'
+import Search from './components/Search.js'
+
+var searchText = ""
+var searchType = 0
+
+function callback(text, type) {
+  searchText = text;
+  searchType = type;
+}
 
 function App() {
   return (
@@ -15,59 +23,9 @@ function App() {
       <header className="App-header">
         <h1>Ecommerce</h1>
         <div className="Search-box">
-          <MyComponent searchID={2}/>
-          {/* Radio Buttons for Search */}
-          <form className="Radio-buttons">
-            {/* Customer option */}
-            <div>
-              <label>
-                <input 
-                  type="radio"
-                  name="service-options"
-                  value="customer"
-                  className="form-check-input"
-                />
-                Customer
-              </label>
-            </div>
-            {/* Order option */}
-            <div>
-              <label>
-                <input 
-                  type="radio"
-                  name="service-options"
-                  value="order"
-                  className="form-check-input"
-                />
-                Order
-              </label>
-            </div>
-            {/* Product option */}
-            <div>
-              <label>
-                <input 
-                  type="radio"
-                  name="service-options"
-                  value="product"
-                  className="form-check-input"
-                />
-                Product
-              </label>
-            </div>
-            {/* Partner option */}
-            <div>
-              <label>
-                <input 
-                  type="radio"
-                  name="service-options"
-                  value="partner"
-                  className="form-check-input"
-                />
-                Partner
-              </label>
-            </div>
-          </form>
-        </div>
+          <Search callback={callback()}/>
+        </div>  
+        <MyComponent searchType={searchType} searchText={searchText}/>
       </header>
     </div>
   );
