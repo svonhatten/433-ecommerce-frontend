@@ -26,7 +26,7 @@ export default class MyComponent extends React.Component {
     handleSubmit(event) {
       event.preventDefault();
       console.log('Search: ' + this.state.searchText + ' Type: ' + this.state.selectedOption);
-      this.props.callback(this.state.searchText, this.state.selectedOption)
+      //this.props.callback(this.state.searchText, this.state.selectedOption)
     }
 
     render() {
