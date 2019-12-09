@@ -6,8 +6,9 @@ import React from 'react';
 //   Link
 // } from "react-router-dom";
 import './App.css';
-import MyComponent from './components/MyComponent.js'
-import Search from './components/Search.js'
+import MyComponent from './components/MyComponent.js';
+import Search from './components/Search.js';
+import LogIn from './components/Login/LogIn.js'
 
 var searchText = ""
 var searchType = 0
@@ -21,6 +22,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <LogIn />
         <h1>Ecommerce</h1>
         <div className="Search-box">
           <Search callback={callback()}/>
