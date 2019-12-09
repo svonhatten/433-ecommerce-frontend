@@ -26,15 +26,15 @@ export default class MyComponent extends React.Component {
     handleSubmit(event) {
       event.preventDefault();
       console.log('Search: ' + this.state.searchText + ' Type: ' + this.state.selectedOption);
-      //this.props.callback(this.state.searchText, this.state.selectedOption)
+      this.props.callback(this.state.searchText, this.state.selectedOption)
     }
 
     render() {
       return(
-        <div>
+        <div align="center">
             <form onSubmit={this.handleSubmit}>
               <label>
-                Search:
+                {"Search: "}
                 <input type="text" value={this.state.value} onChange={this.handleChange} />
               </label>
               <input type="submit" value="Submit" />

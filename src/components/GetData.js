@@ -1,6 +1,7 @@
 //https://reactjs.org/docs/faq-ajax.html
 
 import React from 'react';
+import Table from './Table';
 
 const API_ENDPOINTS = [
   "userdata/users/",
@@ -9,10 +10,9 @@ const API_ENDPOINTS = [
   "partner/partners/"
 ]
 
-export default class MyComponent extends React.Component {
+export default class GetData extends React.Component {
     constructor(props) {
       super(props);
-      this.myRef = React.createRef();
       this.state = {
         error: null,
         isLoaded: false,
@@ -26,11 +26,16 @@ export default class MyComponent extends React.Component {
       this.getData()
     }
 
+    componentDidUpdate(prev){
+      if (prev.searchText !== this.props.searchText || prev.searchType !== this.props.searchType) {
+        this.getData();
+      }
+    }
+
     getData(){
-      // let searchString = ("http://localhost:8080/services/product/products/"+this.state.value)
       let searchString = ("http://localhost:8080/services/")
-      if(this.props.searchType >= 0 && this.props.searchType < 4 && this.props.searchText != null){
-        searchString = searchString + API_ENDPOINTS[this.props.searchType] + this.props.searchText
+      if(this.props.searchType !== "" && this.props.searchText !== ""){
+        searchString = searchString + this.getEndpoint() + this.props.searchText
       }
       else { 
         this.setState({isLoaded: true})
@@ -44,8 +49,7 @@ export default class MyComponent extends React.Component {
         .then(res => res.json())
         .then( result => {
             // let idname = data.body.item_id
-            this.setState({data: result.body, isLoaded: true})
-            console.log("result")
+            this.setState({data: result.body, isLoaded: true, error: null})
           },
           // Note: it's important to handle errors here
           // instead of a catch() block so that we don't swallow
@@ -55,28 +59,16 @@ export default class MyComponent extends React.Component {
               isLoaded: true,
               error
             });
-            console.log("error")
           }
         )
     }
 
-    getLinkButtons(){
-      if(this.state.data != null){
-        let links = this.state.data.links
-        let i = 0;
-        let array = []
-        for(i = 0; i < links.length; i++){
-          array.push(
-          <form action={links[i].url} key={i}>
-              <input type="submit" value={links[i].action} />
-          </form>
-          )
-        }
-        return array
-      }
-      else {
-        return ""
-      }
+    getEndpoint(){
+      let type = this.props.searchType
+      if(type === "customer"){ return API_ENDPOINTS[0]}
+      else if(type === "order"){ return API_ENDPOINTS[1]}
+      else if(type === "product"){ return API_ENDPOINTS[2]}
+      else {return API_ENDPOINTS[3]}
     }
 
     handleChange(event) {
@@ -84,7 +76,6 @@ export default class MyComponent extends React.Component {
     }
   
     handleSubmit(event) {
-      console.log('new value: ' + this.state.value);
       this.getData();
       event.preventDefault();
     }
@@ -99,11 +90,11 @@ export default class MyComponent extends React.Component {
         return <div></div>;
       } else {
         return (
-          <div align="left">
-            <pre>
+          <div align="center">
+            {/* <pre>
               {JSON.stringify(this.state.data, null, 2)}
-            </pre>
-            {this.getLinkButtons()}
+            </pre> */}
+            <Table data={this.state.data}/>
           </div>
         );
       }
