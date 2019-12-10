@@ -16,6 +16,38 @@ export default class Container extends React.Component {
       };
     }
 
+    componentDidMount(){
+      this.postData()
+    }
+
+    async postData() {
+      //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+      const url = 'http://localhost:8080/services/product/products';
+      const data = { "products":[{ 
+        "item_category":"Electronics",
+        "item_price":27.5,
+        "item_quantity_available":10,
+        "item_name":"New Gadget",
+        "item_description": "Electonics item",
+        "item_sold_by": "Partner1",
+        "item_review":3.5
+     }] };
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(data), // data can be `string` or {object}!
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+    
     callback = (text, type) => {
         this.setState({ searchText: text, searchType: type });
         console.log("callback run: " + text + type) 

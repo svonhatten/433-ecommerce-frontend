@@ -32,7 +32,7 @@ export default class MyComponent extends React.Component {
         <div align="center">
             <form onSubmit={this.handleSubmit}>
               <label>
-                {"Search: "}
+                {"Search by ID: "}
                 <input type="text" value={this.state.value} onChange={this.handleChange} />
               </label>
               <input type="submit" value="Submit" />
