@@ -1,5 +1,6 @@
 import React from 'react';
 import './Login.css';
+import ExtraOptions from '../ExtraOptions';
 
 export default class LogIn extends React.Component {
     constructor(props) {
@@ -20,7 +21,6 @@ export default class LogIn extends React.Component {
         this.setState((currentState) => ({
             expandedLogin: !currentState.expandedLogin,
         }));
-        console.log('toggled!');
     }
 
     handleUsername(event){
@@ -36,49 +36,79 @@ export default class LogIn extends React.Component {
     }
 
     submitLogin(event) {
-        console.log('Username: ' + this.state.userText + ' Password: ' + this.state.passText);
-        this.setState(
-            {expandedLogin: false}
-        )
-        event.preventDefault();
+        if(this.state.userText.length >= 4 && this.state.passText.length >= 4){
+            this.setState(
+                {expandedLogin: false}
+            )
+            this.props.callback(true)
+            event.preventDefault();
+        }
     }
 
     render() {
-        if(this.state.expandedLogin){
+        if(this.props.status === true) {
+            return(
+            <div>
+                {"Hello, "+this.state.userText+"."}
+                <ExtraOptions />
+            </div>
+            )  
+        }
+        else if(this.state.expandedLogin){
             return (
                 <div className={`row ${this.state.expandedLogin ? 'expanded-login' : 'normal-login'}`}>
                     <div>
-                        <form>
+                        <form onSubmit={e => { e.preventDefault(); }}>
                             <label>
                                 Username:
-                                <input type="text" value={this.state.value} onChange={this.handleUsername} />
+                                <input
+                                    type="text"
+                                    value={this.state.value}
+                                    onChange={this.handleUsername}
+                                    placeholder={"Username"}
+                                    required
+                                    minLength={4}/>
                             </label>
                         </form>
                     </div>
                     <div>
-                        <form>
+                        <form onSubmit={e => { e.preventDefault(); }}>
                             <label>
                                 Password:
-                                <input type="text" value={this.state.passText} onChange={this.handlePassword} />
+                                <input
+                                    type="password"
+                                    value={this.state.passText}
+                                    onChange={this.handlePassword}
+                                    placeholder={"Password"}
+                                    required
+                                    minLength={4}/>
                             </label>
                         </form>
                     </div>
                     <button
+                        type={"button"}
                         className={'button'} 
                         onClick={this.submitLogin}
                     >
-                    Submit
+                    Log In
+                    </button><button
+                        type={"button"}
+                        className={'button'} 
+                        onClick={this.submitLogin}
+                    >
+                    Sign Up
                     </button>
                 </div>
             );
         }
         else {
             return (
-                <div className={`row ${this.state.expandedLogin ? 'expanded-login' : 'normal-login'}`}
-                >
+                <div className={`row ${this.state.expandedLogin ? 'expanded-login' : 'normal-login'}`}>
                     <button 
                     className={'button'}
-                    onClick={() => this.toggleExpandedLogin()}>Log In</button>
+                    onClick={() => this.toggleExpandedLogin()}>
+                        Log In
+                    </button>
                 </div>
             );
         }

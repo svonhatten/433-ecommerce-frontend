@@ -1,7 +1,7 @@
 //https://reactjs.org/docs/faq-ajax.html
 
 import React from 'react';
-import Table from './Table';
+import Table from './Table/Table.js';
 
 const API_ENDPOINTS = [
   "userdata/users/",

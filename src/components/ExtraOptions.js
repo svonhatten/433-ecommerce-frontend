@@ -1,5 +1,3 @@
-//https://reactjs.org/docs/faq-ajax.html
-
 import React from 'react';
 
 export default class ExtraOptions extends React.Component {
@@ -11,6 +9,12 @@ export default class ExtraOptions extends React.Component {
     }
 
     render() {
-      //
+      return(
+        <div>
+            <form key={'viewOrder'}>
+                <input type="button" value={"View Your Orders"}/>
+            </form>
+        </div>
+      )  
     }
   }

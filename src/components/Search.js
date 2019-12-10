@@ -1,5 +1,3 @@
-//https://reactjs.org/docs/faq-ajax.html
-
 import React from 'react';
 
 export default class MyComponent extends React.Component {
@@ -97,6 +95,13 @@ export default class MyComponent extends React.Component {
                 </label>
             </div>
             </form>
+            <div>
+              <button 
+                className={'button'}
+                onClick={() => this.toggleExpandedLogin()}>
+                  List All Products
+              </button>
+            </div>
         </div>
       )
     }
